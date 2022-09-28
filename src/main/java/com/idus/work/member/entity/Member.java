@@ -16,6 +16,7 @@ import java.util.Optional;
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 20)
@@ -35,9 +36,6 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-
-//    private Integer MEMBER_ORDER_SIZE = 0;
-
     public Order getLastOrder() {
         Order lastOrder = null;
         Optional<Order> order = this.orders.stream().max(Comparator.comparing(Order::getCreateDate));
@@ -46,8 +44,5 @@ public class Member {
             lastOrder = order.get();
         }
         return lastOrder;
-//        return (this.orders.size() > MEMBER_ORDER_SIZE) ?
-//                this.orders.stream().max(Comparator.comparing(Order::getCreateDate)).get()
-//                : null;
     }
 }

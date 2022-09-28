@@ -3,7 +3,6 @@ package com.idus.work.member.dto;
 import com.idus.work.common.constant.Gender;
 import com.idus.work.member.entity.Member;
 import com.idus.work.order.dto.OrderDTO;
-import com.idus.work.order.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -62,6 +61,5 @@ public class MemberDTO {
                     .lastOrder(OrderDTO.OrderResp.createOrderResp(member.getLastOrder()))
                     .build();
         }
-
     }
 }
