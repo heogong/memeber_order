@@ -17,7 +17,7 @@ public class OrderDTO {
 
         public static OrderResp createOrderResp(Order order) {
             return OrderResp.builder()
-                    .orderName(order.getOrderNumber())
+                    .orderNumber(order.getOrderNumber())
                     .orderName(order.getOrderName())
                     .createDate(order.getCreateDate())
                     .build();

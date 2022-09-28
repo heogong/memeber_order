@@ -1,8 +1,12 @@
 package com.idus.work.member.entity;
 
 import com.idus.work.common.constant.Gender;
+import com.idus.work.member.dto.MemberDTO;
 import com.idus.work.order.entity.Order;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.lang.module.FindException;
@@ -11,6 +15,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Entity
 public class Member {
@@ -44,5 +51,20 @@ public class Member {
             lastOrder = order.get();
         }
         return lastOrder;
+    }
+
+//    public static Member createMember(MemberDTO.MemberReq req) {
+//        return Member
+//
+//    }
+
+    // 초기 order 생성 데이터
+    public static Member createInitMember(MemberDTO.MemberResp resp) {
+        return Member.builder()
+                .id(resp.getId())
+                .name(resp.getName())
+                .nickName(resp.getNickName())
+                .phoneNumber(resp.getPhoneNumber())
+                .build();
     }
 }
