@@ -19,7 +19,7 @@ public class OrderDTO {
             return order == null ? null :
                     OrderResp.builder()
                             .orderNumber(order.getOrderNumber())
-                            .orderName(order.getOrderName())
+                            .orderName(order.getProductName())
                             .createDate(order.getCreateDate())
                             .build();
         }
