@@ -5,11 +5,14 @@ import com.idus.work.member.entity.Member;
 import com.idus.work.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +23,28 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class MemberService implements UserDetailsService {
+public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    /**
+     * member 등록
+     * @param req : name, nickname, email, password ...
+     * @return member 객체
+     */
     public MemberDTO.MemberResp createMember(MemberDTO.MemberReq req) {
-
         if(memberRepository.findByEmail(req.getEmail()).isPresent()) {
             throw new DuplicateKeyException("There are registered users");
         }
-
-        Member member = memberRepository.save(Member.createMember(req));
+        Member member = memberRepository.save(Member.createMember(req, passwordEncoder));
         return MemberDTO.MemberResp.createMemberResp(member);
     }
 
+    /**
+     * member 조회
+     * @param id : 사용자 고유번호(seq)
+     * @return member 객체, order 객체
+     */
     @Transactional(readOnly = true)
     public MemberDTO.MemberResp getMember(Long id) {
         Member member = memberRepository.findById(id)
@@ -40,19 +52,18 @@ public class MemberService implements UserDetailsService {
         return MemberDTO.MemberResp.createMemberRespWithOrder(member);
     }
 
+    /**
+     * member 리스트 조회
+     * @param req : name(선택), email(선택), 페이징 데이터(선택)
+     * @return Page 객체
+     */
     @Transactional(readOnly = true)
-    public List<MemberDTO.MemberListResp> getAllMember(MemberDTO.MemberListReq req) {
+    public Page<MemberDTO.MemberListResp> getAllMember(MemberDTO.MemberListReq req) {
         Pageable pageable = PageRequest.of(req.getIndex(), req.getPage());
-
-        return memberRepository.findByAllMemberByPage(req, pageable).stream()
+        Long count = memberRepository.findByAllMemberByCount(req);
+        List<MemberDTO.MemberListResp> content = memberRepository.findByAllMemberByPage(req, pageable).stream()
                 .map(MemberDTO.MemberListResp::createMemberListResp)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Not Find User"));
+        return new PageImpl<>(content, pageable, count);
     }
 }
