@@ -27,10 +27,23 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
                 .where(
                         eqString(req.getName()),
                         eqString(req.getEmail())
-                ).orderBy(member.id.desc())
+                )
+                .orderBy(member.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+    }
+
+    @Override
+    public Long findByAllMemberByCount(MemberDTO.MemberListReq req) {
+        return jpaQueryFactory
+                .select(member.count())
+                .from(member)
+                .where(
+                        eqString(req.getName()),
+                        eqString(req.getEmail())
+                )
+                .fetchOne();
     }
 
     private BooleanExpression eqString(String value) {

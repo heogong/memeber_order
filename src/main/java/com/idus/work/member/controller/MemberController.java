@@ -3,6 +3,7 @@ package com.idus.work.member.controller;
 import com.idus.work.member.dto.MemberDTO;
 import com.idus.work.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class MemberController {
     }
 
     @GetMapping("/member/all")
-    public ResponseEntity<List<MemberDTO.MemberListResp>> getAllMember(MemberDTO.MemberListReq req) {
+    public ResponseEntity<Page<MemberDTO.MemberListResp>> getAllMember(MemberDTO.MemberListReq req) {
         return new ResponseEntity<>(memberService.getAllMember(req), HttpStatus.OK);
     }
 }

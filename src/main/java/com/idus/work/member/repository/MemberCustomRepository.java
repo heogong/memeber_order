@@ -12,4 +12,9 @@ public interface MemberCustomRepository {
 
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Member> findByAllMemberByPage(MemberDTO.MemberListReq searchDate, Pageable pageable);
+
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+    Long findByAllMemberByCount(MemberDTO.MemberListReq searchDate);
+
+
 }
