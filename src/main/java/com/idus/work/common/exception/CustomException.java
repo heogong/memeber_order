@@ -3,6 +3,7 @@ package com.idus.work.common.exception;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,7 +24,7 @@ public class CustomException {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler({DuplicateKeyException.class, FindException.class})
+    @ExceptionHandler({DuplicateKeyException.class, FindException.class, UsernameNotFoundException.class})
     public ResponseEntity<Map<String, String>> handleDuplicateKeyException(Exception ex) {
         Map<String, String> errors = new HashMap<>();
         errors.put("status", String.valueOf(HttpStatus.BAD_REQUEST));
