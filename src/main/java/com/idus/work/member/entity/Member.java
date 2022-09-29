@@ -43,10 +43,10 @@ public class Member implements UserDetails {
     private Gender gender;
 
     @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
 
     @Transient
-    private final String ROLE_USER = "ROLE_USER";
+    private final String DEFAULT_ROLE_USER = "ROLE_USER";
 
     public Order getLastOrder() {
         Order lastOrder = null;
@@ -69,11 +69,11 @@ public class Member implements UserDetails {
                 .password(encoder.encode(req.getPassword()))
                 .phoneNumber(req.getPhoneNumber())
                 .email(req.getEmail())
-                .gender(req.getGender())
+                .gender(req.getGender() != null ? req.getGender() : Gender.NONE)
                 .build();
     }
 
-    // 초기 order 생성 데이터
+    // 애플리케이션 구동시 초기 order 생성 데이터
     public static Member createInitMember(MemberDTO.MemberResp resp) {
         return Member.builder()
                 .id(resp.getId())
@@ -85,7 +85,7 @@ public class Member implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(ROLE_USER));
+        return List.of(new SimpleGrantedAuthority(DEFAULT_ROLE_USER));
     }
 
     @Override
