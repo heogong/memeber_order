@@ -12,14 +12,14 @@ public class OrderDTO {
     @Getter
     public static class OrderResp {
         private String orderNumber;
-        private String orderName;
+        private String productName;
         private Date createDate;
 
         public static OrderResp createOrderResp(Order order) {
             return order == null ? null :
                     OrderResp.builder()
                             .orderNumber(order.getOrderNumber())
-                            .orderName(order.getProductName())
+                            .productName(order.getProductName())
                             .createDate(order.getCreateDate())
                             .build();
         }

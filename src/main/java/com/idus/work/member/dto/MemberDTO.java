@@ -77,7 +77,6 @@ public class MemberDTO {
         private String email;
         @JsonIgnore
         private Gender gender;
-        @JsonIgnore
         private List<OrderDTO.OrderResp> orderRespList;
 
         public static MemberResp createMemberResp(Member member) {
@@ -88,20 +87,9 @@ public class MemberDTO {
                     .phoneNumber(member.getPhoneNumber())
                     .email(member.getEmail())
                     .gender(member.getGender())
-                    .build();
-        }
-
-        public static MemberResp createMemberRespWithOrder(Member member) {
-            return MemberResp.builder()
-                    .id(member.getId())
-                    .name(member.getName())
-                    .nickName(member.getNickName())
-                    .phoneNumber(member.getPhoneNumber())
-                    .email(member.getEmail())
-                    .gender(member.getGender())
-                    .orderRespList(member.getOrders().stream()
+                    .orderRespList(member.getOrders() != null ? member.getOrders().stream()
                             .map(OrderDTO.OrderResp::createOrderResp)
-                            .collect(Collectors.toList())
+                            .collect(Collectors.toList()) : null
                     )
                     .build();
         }

@@ -49,7 +49,7 @@ public class MemberService {
     public MemberDTO.MemberResp getMember(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new FindException("Not Find User"));
-        return MemberDTO.MemberResp.createMemberRespWithOrder(member);
+        return MemberDTO.MemberResp.createMemberResp(member);
     }
 
     /**
