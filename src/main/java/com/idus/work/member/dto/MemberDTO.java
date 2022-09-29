@@ -1,9 +1,10 @@
 package com.idus.work.member.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.idus.work.common.constant.Gender;
 import com.idus.work.member.entity.Member;
 import com.idus.work.order.dto.OrderDTO;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,15 +27,18 @@ public class MemberDTO {
 
         @NotBlank
         @Size(max = 20)
+        @ApiModelProperty(example = "박정진")
         private final String name;
 
         @NotBlank
         @Size(max = 30)
+        @ApiModelProperty(example = "저스트두잇")
         private final String nickName;
 
         @Email
         @NotBlank
         @Size(max = 100)
+        @ApiModelProperty(example = "just@doit.com")
         private final String email;
 
         @NotBlank
@@ -47,8 +51,10 @@ public class MemberDTO {
         @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$",
                 message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
         @Size(min = 10, max = 20)
+        @ApiModelProperty(example = "01000000000")
         private String phoneNumber; // 숫자
 
+        @ApiModelProperty(example = "NONE")
         private Gender gender;
     }
 
@@ -69,13 +75,13 @@ public class MemberDTO {
 
     @Builder
     @Getter
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class MemberResp {
         private Long id;
         private String name;
         private String nickName;
         private String phoneNumber;
         private String email;
-        @JsonIgnore
         private Gender gender;
         private List<OrderDTO.OrderResp> orderRespList;
 
@@ -87,10 +93,7 @@ public class MemberDTO {
                     .phoneNumber(member.getPhoneNumber())
                     .email(member.getEmail())
                     .gender(member.getGender())
-                    .orderRespList(member.getOrders() != null ? member.getOrders().stream()
-                            .map(OrderDTO.OrderResp::createOrderResp)
-                            .collect(Collectors.toList()) : null
-                    )
+                    .orderRespList(member.getMemberOrderList())
                     .build();
         }
     }

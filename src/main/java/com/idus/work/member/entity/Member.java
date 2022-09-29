@@ -2,6 +2,7 @@ package com.idus.work.member.entity;
 
 import com.idus.work.common.constant.Gender;
 import com.idus.work.member.dto.MemberDTO;
+import com.idus.work.order.dto.OrderDTO;
 import com.idus.work.order.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -53,6 +55,11 @@ public class Member implements UserDetails {
             lastOrder = order.get();
         }
         return lastOrder;
+    }
+    public List<OrderDTO.OrderResp> getMemberOrderList() {
+        return this.orders != null ? this.orders.stream()
+                .map(OrderDTO.OrderResp::createOrderResp)
+                .collect(Collectors.toList()) : null;
     }
 
     public static Member createMember(MemberDTO.MemberReq req, PasswordEncoder encoder) {
