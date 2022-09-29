@@ -26,15 +26,15 @@ public class Member implements UserDetails {
     private Long id;
 
     @Column(length = 20)
-    private String name; // 한글, 영문 만
+    private String name;
 
     @Column(length = 30)
-    private String nickName; // 영문 소문
-    private String password; // 대문자, 소문자, 특수문자, 숫자 각 1개
-    private Integer phoneNumber; // 숫자
+    private String nickName;
+    private String password;
+    private String phoneNumber;
 
     @Column(length = 100)
-    private String email; // 이메일 형식
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -51,10 +51,17 @@ public class Member implements UserDetails {
         return lastOrder;
     }
 
-//    public static Member createMember(MemberDTO.MemberReq req) {
-//        return Member
-//
-//    }
+    public static Member createMember(MemberDTO.MemberReq req) {
+        return Member.builder()
+                .name(req.getName())
+                .nickName(req.getNickName())
+                .password(req.getPassword())
+                .phoneNumber(req.getPhoneNumber())
+                .email(req.getEmail())
+                .gender(req.getGender())
+                .orders(null)
+                .build();
+    }
 
     // 초기 order 생성 데이터
     public static Member createInitMember(MemberDTO.MemberResp resp) {

@@ -21,7 +21,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Member> findByAllMemberByPage(MemberDTO.MemberReq req, Pageable pageable) {
+    public List<Member> findByAllMemberByPage(MemberDTO.MemberListReq req, Pageable pageable) {
         return jpaQueryFactory
                 .selectFrom(member)
                 .where(
