@@ -19,3 +19,4 @@
 - http://localhost:8080
     - id : member@member.com
     - pw : superAdmin1!
+- swagger : http://localhost:8080/swagger-ui.html

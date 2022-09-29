@@ -27,12 +27,14 @@ public class MemberDTO {
 
         @NotBlank
         @Size(max = 20)
-        @ApiModelProperty(example = "박정진")
+        @Pattern(regexp = "^[a-zA-Z가-힣]*$", message = "한글, 영문 대/소문자만 입력가능")
+        @ApiModelProperty(example = "박정진", name = "이름(한글, 영문 대/소문자)")
         private final String name;
 
         @NotBlank
         @Size(max = 30)
-        @ApiModelProperty(example = "저스트두잇")
+        @Pattern(regexp = "^[a-z]*$", message = "영문 소문자만 입력가능")
+        @ApiModelProperty(example = "justdoit", name = "별명(영문 소문자)")
         private final String nickName;
 
         @Email
@@ -44,7 +46,7 @@ public class MemberDTO {
         @NotBlank
         @Size(min = 9, message = "최소 9자 이상")
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$",
-                message = "대소문자, 특수문자, 숫자 포함")
+                message = "영문 대/소문자, 특수문자, 숫자 포함")
         private String password; // 대문자, 소문자, 특수문자, 숫자 각 1개
 
         @NotBlank
