@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.idus.work.common.constant.Gender;
 import com.idus.work.member.entity.Member;
 import com.idus.work.order.dto.OrderDTO;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +38,9 @@ public class MemberDTO {
         private final String email;
 
         @NotBlank
+        @Size(min = 9, message = "최소 9자 이상")
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$",
                 message = "대소문자, 특수문자, 숫자 포함")
-        @Size(min = 9, message = "최소 9자 이상")
         private String password; // 대문자, 소문자, 특수문자, 숫자 각 1개
 
         @NotBlank
