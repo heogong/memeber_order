@@ -6,17 +6,30 @@ import com.idus.work.order.dto.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MemberDTO {
 
-    @AllArgsConstructor
+    private static final Integer DEFAULT_INDEX_SIZE = 0;
+    private static final Integer DEFAULT_PAGE_SIZE = 5;
+
+//    @AllArgsConstructor
     @Getter
     public static class MemberReq {
-        private String name;
-        private String email;
+        private final Integer index;
+        private final Integer page;
+        private final String name;
+        private final String email;
+
+        public MemberReq(Integer index, Integer page, String name, String email) {
+            this.index = index == null ? DEFAULT_INDEX_SIZE : index;
+            this.page = page == null ? DEFAULT_PAGE_SIZE : page;
+            this.name = name;
+            this.email = email;
+        }
     }
 
     @Builder
@@ -58,7 +71,7 @@ public class MemberDTO {
                     .id(member.getId())
                     .name(member.getName())
                     .email(member.getEmail())
-                    .lastOrder(OrderDTO.OrderResp.createOrderResp(member.getLastOrder()))
+                    .lastOrder(OrderDTO.OrderResp.createOrderResp(member.getLastOrder())) // TODO lastorder null(주문내역 없을 시) 처리
                     .build();
         }
     }
