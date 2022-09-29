@@ -3,15 +3,16 @@ package com.idus.work.member.entity;
 import com.idus.work.common.constant.Gender;
 import com.idus.work.member.dto.MemberDTO;
 import com.idus.work.order.entity.Order;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.lang.module.FindException;
 import java.util.*;
 
 @NoArgsConstructor
@@ -42,6 +43,9 @@ public class Member implements UserDetails {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    @Transient
+    private final String ROLE_USER = "ROLE_USER";
+
     public Order getLastOrder() {
         Order lastOrder = null;
         Optional<Order> order = this.orders.stream().max(Comparator.comparing(Order::getCreateDate));
@@ -51,15 +55,14 @@ public class Member implements UserDetails {
         return lastOrder;
     }
 
-    public static Member createMember(MemberDTO.MemberReq req) {
+    public static Member createMember(MemberDTO.MemberReq req, PasswordEncoder encoder) {
         return Member.builder()
                 .name(req.getName())
                 .nickName(req.getNickName())
-                .password(req.getPassword())
+                .password(encoder.encode(req.getPassword()))
                 .phoneNumber(req.getPhoneNumber())
                 .email(req.getEmail())
                 .gender(req.getGender())
-                .orders(null)
                 .build();
     }
 
@@ -75,7 +78,7 @@ public class Member implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(ROLE_USER));
     }
 
     @Override
