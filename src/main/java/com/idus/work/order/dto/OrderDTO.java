@@ -16,11 +16,12 @@ public class OrderDTO {
         private Date createDate;
 
         public static OrderResp createOrderResp(Order order) {
-            return OrderResp.builder()
-                    .orderNumber(order.getOrderNumber())
-                    .orderName(order.getOrderName())
-                    .createDate(order.getCreateDate())
-                    .build();
+            return order == null ? null :
+                    OrderResp.builder()
+                            .orderNumber(order.getOrderNumber())
+                            .orderName(order.getOrderName())
+                            .createDate(order.getCreateDate())
+                            .build();
         }
     }
 }
