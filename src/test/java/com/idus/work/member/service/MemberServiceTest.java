@@ -11,10 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -29,20 +26,14 @@ class MemberServiceTest {
 
     @Mock
     MemberRepository memberRepository;
-
     @Mock
     PasswordEncoder passwordEncoder;
-
     @InjectMocks
     MemberService memberService;
 
     Member memberData;
     MemberDTO.MemberReq memberReq;
-
     MemberDTO.MemberListReq listReq;
-
-//    MemberDTO.MemberResp memberResp;
-
 
     @BeforeEach
     public void beforeEach() {

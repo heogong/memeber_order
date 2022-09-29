@@ -1,4 +1,4 @@
-package com.idus.work.member.repository.impl;
+package com.idus.work.member.service.repository.impl;
 
 import com.idus.work.member.dto.MemberDTO;
 import com.querydsl.jpa.impl.JPAQueryFactory;
