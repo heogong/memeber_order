@@ -40,7 +40,7 @@ public class Member implements UserDetails {
     @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, unique = true, nullable = false)
     private String email;
 
     @Column(length = 10)
