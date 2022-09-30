@@ -3,6 +3,7 @@ package com.idus.work.member.controller;
 import com.idus.work.member.dto.MemberDTO;
 import com.idus.work.member.service.MemberService;
 import io.swagger.annotations.ApiOperation;
+import javassist.bytecode.DuplicateMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class MemberController {
 
     @PostMapping("/member")
     @ApiOperation(value = "멤버 등록", notes = "이름, 별명, 전화번호...")
-    public ResponseEntity<MemberDTO.MemberResp> createMember(@RequestBody @Valid MemberDTO.MemberReq req) {
+    public ResponseEntity<MemberDTO.MemberResp> createMember(@RequestBody @Valid MemberDTO.MemberReq req) throws DuplicateMemberException {
         return new ResponseEntity<>(memberService.createMember(req), HttpStatus.OK);
     }
 

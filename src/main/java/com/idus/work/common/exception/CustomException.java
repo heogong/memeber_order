@@ -1,5 +1,6 @@
 package com.idus.work.common.exception;
 
+import javassist.bytecode.DuplicateMemberException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class CustomException {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler({DuplicateKeyException.class, FindException.class, UsernameNotFoundException.class})
+    @ExceptionHandler({DuplicateMemberException.class, FindException.class, UsernameNotFoundException.class})
     public ResponseEntity<Map<String, String>> handleDuplicateKeyException(Exception ex) {
         Map<String, String> errors = new HashMap<>();
         errors.put("status", String.valueOf(HttpStatus.BAD_REQUEST));

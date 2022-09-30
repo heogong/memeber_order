@@ -3,6 +3,7 @@ package com.idus.work.member.service;
 import com.idus.work.member.dto.MemberDTO;
 import com.idus.work.member.entity.Member;
 import com.idus.work.member.repository.MemberRepository;
+import javassist.bytecode.DuplicateMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -33,9 +34,9 @@ public class MemberService {
      * @return member 객체
      */
     @Transactional
-    public MemberDTO.MemberResp createMember(MemberDTO.MemberReq req) {
+    public MemberDTO.MemberResp createMember(MemberDTO.MemberReq req) throws DuplicateMemberException {
         if(memberRepository.findByEmail(req.getEmail()).isPresent()) {
-            throw new DuplicateKeyException("There are registered users");
+            throw new DuplicateMemberException("There are registered users");
         }
         Member member = memberRepository.save(Member.createMember(req, passwordEncoder));
         return MemberDTO.MemberResp.createMemberResp(member);
