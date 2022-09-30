@@ -110,7 +110,7 @@ public class MemberDTO {
                     .id(member.getId())
                     .name(member.getName())
                     .email(member.getEmail())
-                    .lastOrder(OrderDTO.OrderResp.createOrderResp(member.getLastOrder()))
+                    .lastOrder(OrderDTO.OrderResp.createOrderResp(member.lastOrder()))
                     .build();
         }
     }

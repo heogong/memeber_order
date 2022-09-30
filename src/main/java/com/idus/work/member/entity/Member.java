@@ -53,7 +53,7 @@ public class Member implements UserDetails {
     @Transient
     private final String DEFAULT_ROLE_USER = "ROLE_USER";
 
-    public Order getLastOrder() {
+    public Order lastOrder() {
         Order lastOrder = null;
         Optional<Order> order = this.orders.stream().max(Comparator.comparing(Order::getCreateDate));
         if(order.isPresent()) {
