@@ -81,7 +81,7 @@ public class MemberDTO {
         private String nickName;
         private String phoneNumber;
         private String email;
-        private Gender gender;
+        private String gender;
         private List<OrderDTO.OrderResp> orderRespList;
 
         public static MemberResp createMemberResp(Member member) {
@@ -91,7 +91,7 @@ public class MemberDTO {
                     .nickName(member.getNickName())
                     .phoneNumber(member.getPhoneNumber())
                     .email(member.getEmail())
-                    .gender(member.getGender())
+                    .gender(member.getGender().getKorGender())
                     .orderRespList(member.getMemberOrderList())
                     .build();
         }
