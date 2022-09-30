@@ -5,6 +5,7 @@ import com.idus.work.member.dto.MemberDTO;
 import com.idus.work.member.entity.Member;
 import com.idus.work.member.repository.MemberRepository;
 import com.idus.work.order.entity.Order;
+import javassist.bytecode.DuplicateMemberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("멤버 등록 로직 테스트")
-    void createMember() {
+    void createMember() throws DuplicateMemberException {
         Member.createMember(memberReq, passwordEncoder);
         given(memberRepository.save(any())).willReturn(memberData);
 
