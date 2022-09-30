@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -18,13 +19,12 @@ public class Order {
     @GeneratedValue(generator = "orderNumber")
     @GenericGenerator(name = "orderNumber", strategy = "com.idus.work.order.entity.OrderNumberGenerator")
     @Column(length = 12)
-    private String orderNumber; // 중복불가 영문자 대문자
+    private String orderNumber;
 
     @Column(length = 100, nullable = false)
     private String productName;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private LocalDateTime createDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
@@ -36,7 +36,7 @@ public class Order {
 
     private Order(String productName, Member member) {
         this.productName = productName;
-        this.createDate = new Date();
+        this.createDate = LocalDateTime.now();
         this.member = member;
     }
 }

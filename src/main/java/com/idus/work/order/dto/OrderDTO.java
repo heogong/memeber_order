@@ -4,6 +4,7 @@ import com.idus.work.order.entity.Order;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class OrderDTO {
@@ -13,7 +14,7 @@ public class OrderDTO {
     public static class OrderResp {
         private String orderNumber;
         private String productName;
-        private Date createDate;
+        private LocalDateTime createDate;
 
         public static OrderResp createOrderResp(Order order) {
             return order == null ? null :
