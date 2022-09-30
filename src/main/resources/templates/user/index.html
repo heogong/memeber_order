@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>멤버 목록</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+
+<style>
+    .vertical-middle {
+        vertical-align: middle;
+    }
+</style>
+<body onload="initPage();">
+
+<div class="container">
+    <div class="text-right">
+        <button class="btn btn-dark" type="button" onclick="logout()">로그아웃</button>
+    </div>
+    <h1 class="text-center">멤버 목록</h1>
+    <div id="userId" class="text-right"></div>
+
+    <form class="form">
+        <div class="form-group">
+            <table class="table table-hover text-center">
+                <tr>
+                    <th>No.</th>
+                    <th>이메일</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>마지막주문정보</th>
+                </tr>
+                  <tbody id="tBody"></tbody>
+            </table>
+        </div>
+    </form>
+    <ul class="pagination justify-content-center" id="pagingParent"></ul>
+<!--    <div class="text-right">-->
+<!--        <button class="btn btn-primary" type="button" onclick="goRegister()">등록</button>-->
+<!--    </div>-->
+</div>
+
+<script type="text/javascript">
+    const pageSize = 5;
+
+    function initPage() {
+        getMemberList(0);
+    }
+
+    function goRegister() {
+        location.href="/view/image/register";
+    }
+
+    function getMemberList(index) {
+        const params = {
+            index: index,
+            page: pageSize
+        }
+
+        $.ajax({
+            url : "/api/v1/member",
+            method : 'GET',
+            contentType : 'application/json; charset=utf-8',
+            data: params,
+            dataType: "json",
+            success : function(e) {
+                console.log(e);
+                $("#userId").text("USERID : " + e.userId);
+                const tBody = $('#tBody');
+                const totalCount = e.totalCount;
+                tBody.html("");
+
+                if(e.imageDTO.length > 0) {
+                    for (let i = 0; i < e.imageDTO.length; i++) {
+                        const image = e.imageDTO[i];
+                        const tr = $("<tr>").css('cursor', 'pointer')
+                            .attr('onClick', 'location.href="/view/image/detail/' + image.id + '"').appendTo(tBody);
+                        $("<td>").addClass("align-middle").text(totalCount - (pageSize * (page - 1)) - i).appendTo(tr);
+                        $("<td>").addClass("align-middle").append(
+                            $("<img>").attr("onError", "this.src='/images/404_thumb.jpg';").addClass("rounded").attr("src", "/img/" + image.imgTitle + "_thumb." + image.extension)
+                        ).appendTo(tr);
+                        $("<td>").addClass("align-middle").text(image.title).appendTo(tr);
+                        $("<td>").addClass("align-middle").text(image.viewCount).appendTo(tr);
+                        const date = new Date(image.createdDate);
+                        $("<td>").addClass("align-middle").text(date.getFullYear() + "." + (date.getMonth()+1) + "." + date.getDate() + " " + date.getHours() + ":" +date.getMinutes() + ":" + date.getSeconds()).appendTo(tr);
+                    }
+                } else {
+                    const tr = $("<tr>").appendTo(tBody);
+                    $("<td>").addClass("textCenter").attr("colspan", "5").text("등록된 데이터가 없습니다.").appendTo(tr);
+                }
+
+                const pagingBody = $("#pagingParent");
+                pagingBody.html("");
+
+                let totalPageCnt = (totalCount % pageSize == 0) ? totalCount / pageSize : (totalCount / pageSize) + 1;
+                totalPageCnt = parseInt(totalPageCnt);
+
+                for(let i = 1; i <= totalPageCnt; i++) {
+                    const li = i == page ? $("<li>").addClass("page-item").addClass("active") : $("<li>").addClass("page-item");
+                    li.append($("<a>").addClass("page-link").text(i))
+                        .bind("click", i, function (ee) {
+                            const page = ee.data;
+                            getImageList(page);
+                    }).appendTo(pagingBody);
+                }
+            },
+            error : function(){
+                alert('통신실패!!');
+            }
+        });
+    }
+
+    function logout() {
+        location.href="/logoutProc";
+    }
+
+</script>
+
+</body>
+</html>
