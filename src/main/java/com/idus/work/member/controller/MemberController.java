@@ -29,7 +29,7 @@ public class MemberController {
         return new ResponseEntity<>(memberService.getMember(id), HttpStatus.OK);
     }
 
-    @GetMapping("/member/all")
+    @GetMapping("/member")
     @ApiOperation(value = "멤버 리스트", notes = "등록된 전체 목록 조회 - 페이징")
     public ResponseEntity<Page<MemberDTO.MemberListResp>> getAllMember(MemberDTO.MemberListReq req) {
         return new ResponseEntity<>(memberService.getAllMember(req), HttpStatus.OK);
