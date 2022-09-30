@@ -9,33 +9,35 @@
     <link rel="stylesheet" href="/css/common.css">
 </head>
         <body onload="initPage();">
-            <h1 class="text-center mg-tb-30">멤버 정보</h1>
-            <table class="table table-hover" style="table-layout: fixed;">
-                <tr>
-                    <th class="col-md-2">이름</th>
-                    <th class="col-md-3">이메일</th>
-                    <th class="col-md-2">별명</th>
-                    <th class="col-md-2">전화번호</th>
-                    <th class="col-md-1">성별</th>
-                </tr>
-                <tr>
-                    <td id="name"></td>
-                    <td id="email"></td>
-                    <td id="nickName"></td>
-                    <td id="phoneNumber"></td>
-                    <td id="gender"></td>
-                </tr>
-            </table>
+            <div class="container">
+                <h1 class="text-center mg-tb-30">멤버 정보</h1>
+                <table class="table table-hover" style="table-layout: fixed;">
+                    <tr>
+                        <th class="col-md-2">이름</th>
+                        <th class="col-md-3">이메일</th>
+                        <th class="col-md-2">별명</th>
+                        <th class="col-md-2">전화번호</th>
+                        <th class="col-md-1">성별</th>
+                    </tr>
+                    <tr>
+                        <td id="name"></td>
+                        <td id="email"></td>
+                        <td id="nickName"></td>
+                        <td id="phoneNumber"></td>
+                        <td id="gender"></td>
+                    </tr>
+                </table>
 
-            <h1 class="text-center mg-tb-30">주문 정보</h1>
-            <table class="table table-hover text-center">
-                <tr>
-                    <th>주문번호</th>
-                    <th>제품명</th>
-                    <th>주문날짜</th>
-                </tr>
-                <tbody id="tBody"></tbody>
-            </table>
+                <h1 class="text-center mg-tb-30">주문 정보</h1>
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th>주문번호</th>
+                        <th>제품명</th>
+                        <th>주문날짜</th>
+                    </tr>
+                    <tbody id="tBody"></tbody>
+                </table>
+            </div>
 
 
         <input type="hidden" th:value="${id}" name="memberId"/>

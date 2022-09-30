@@ -91,12 +91,12 @@
                 const totalCount = e.totalElements;
                 tBody.html("");
 
-                if(e.size > 0) {
-                    for (let i = 0; i < e.size; i++) {
+                if(e.content.length > 0) {
+                    for (let i = 0; i < e.content.length; i++) {
                         const member = e.content[i];
                         const tr = $("<tr>").css('cursor', 'pointer')
                             .attr('onClick', 'location.href="/view/member/detail/' + member.id + '"').appendTo(tBody);
-                        $("<td>").addClass("align-middle").text(totalCount - (pageSize * (list - 1)) - i).appendTo(tr);
+                        $("<td>").addClass("align-middle").text(totalCount - (pageSize * index) - i).appendTo(tr);
                         $("<td>").addClass("align-middle").text(member.email).appendTo(tr);
                         $("<td>").addClass("align-middle").text(member.name).appendTo(tr);
                         $("<td>").addClass("align-middle").text(member.lastOrder != null ? member.lastOrder.productName : "주문정보가 없습니다.").appendTo(tr);
@@ -112,9 +112,9 @@
                 let totalPageCnt = (totalCount % pageSize === 0) ? totalCount / pageSize : (totalCount / pageSize) + 1;
                 totalPageCnt = parseInt(totalPageCnt);
 
-                for(let i = 1; i <= totalPageCnt; i++) {
-                    const li = i === list ? $("<li>").addClass("page-item").addClass("active") : $("<li>").addClass("page-item");
-                    li.append($("<a>").addClass("page-link").text(i))
+                for(let i = 0; i < totalPageCnt; i++) {
+                    const li = i === index ? $("<li>").addClass("page-item").addClass("active") : $("<li>").addClass("page-item");
+                    li.append($("<a>").addClass("page-link").text(i+1))
                         .bind("click", i, function (ee) {
                             const page = ee.data;
                             getMemberList(page);
