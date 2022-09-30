@@ -2,15 +2,13 @@ server:
   port: 8080
 
 spring:
-  profiles:
-    active: local
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
-        format_sql: true
-        show_sql: true
+#        format_sql: true
+#        show_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
   datasource:
@@ -18,7 +16,8 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+logging:
+  config: classpath:logback-spring.xml
