@@ -2,6 +2,7 @@ package com.idus.work.member.service.repository.impl;
 
 import com.idus.work.member.dto.MemberDTO;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ class MemberCustomRepositoryImplTest {
     JPAQueryFactory jpaQueryFactory;
 
     @Test
+    @DisplayName("멤버 리스트 조회 쿼리 테스트")
     void findByAllMemberByPage() {
         String name = "자바";
         String email = "spring@boot.com";
@@ -33,6 +35,7 @@ class MemberCustomRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("멤버 카운트 조회 쿼리 테스트")
     void findByAllMemberByCount() {
         String name = "자바";
         String email = "spring@boot.com";

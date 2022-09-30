@@ -6,6 +6,7 @@ import com.idus.work.member.entity.Member;
 import com.idus.work.member.repository.MemberRepository;
 import com.idus.work.order.entity.Order;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -62,6 +63,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("멤버 등록 로직 테스트")
     void createMember() {
         Member.createMember(memberReq, passwordEncoder);
         given(memberRepository.save(any())).willReturn(memberData);
@@ -73,6 +75,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("멤버 조회 로직 테스트")
     void getMember() {
 
         given(memberRepository.findById(any())).willReturn(Optional.of(memberData));
@@ -84,6 +87,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("멤버 리스트 조회 로직 테스트")
     void getAllMember() {
         given(memberRepository.findByAllMemberByCount(any())).willReturn(7L);
         given(memberRepository.findByAllMemberByPage(any(), any())).willReturn(List.of(memberData));
