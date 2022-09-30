@@ -25,8 +25,8 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
         return jpaQueryFactory
                 .selectFrom(member)
                 .where(
-                        eqString(req.getName()),
-                        eqString(req.getEmail())
+                        containNameValue(req.getName()),
+                        containEmailValue(req.getEmail())
                 )
                 .orderBy(member.id.desc())
                 .offset(pageable.getOffset())
@@ -40,13 +40,17 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
                 .select(member.count())
                 .from(member)
                 .where(
-                        eqString(req.getName()),
-                        eqString(req.getEmail())
+                        containNameValue(req.getName()),
+                        containEmailValue(req.getEmail())
                 )
                 .fetchOne();
     }
 
-    private BooleanExpression eqString(String value) {
-        return StringUtils.hasText(value) ? member.name.eq(value) : null;
+    private BooleanExpression containNameValue(String value) {
+        return StringUtils.hasText(value) ? member.name.contains(value) : null;
+    }
+
+    private BooleanExpression containEmailValue(String value) {
+        return StringUtils.hasText(value) ? member.email.contains(value) : null;
     }
 }
