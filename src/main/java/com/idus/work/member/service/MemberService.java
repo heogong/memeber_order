@@ -32,6 +32,7 @@ public class MemberService {
      * @param req : name, nickname, email, password ...
      * @return member 객체
      */
+    @Transactional
     public MemberDTO.MemberResp createMember(MemberDTO.MemberReq req) {
         if(memberRepository.findByEmail(req.getEmail()).isPresent()) {
             throw new DuplicateKeyException("There are registered users");
