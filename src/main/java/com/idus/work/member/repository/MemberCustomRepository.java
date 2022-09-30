@@ -9,12 +9,9 @@ import javax.persistence.QueryHint;
 import java.util.List;
 
 public interface MemberCustomRepository {
-
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Member> findByAllMemberByPage(MemberDTO.MemberListReq req, Pageable pageable);
 
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Long findByAllMemberByCount(MemberDTO.MemberListReq req);
-
-
 }

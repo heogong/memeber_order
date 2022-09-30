@@ -13,11 +13,11 @@ public class InitOrderApplicationRunner implements ApplicationRunner {
 
     /**
      * 애플리케이션 구동 시 초기 주문정보 세잍
-     * @GeneratedValue 커스텀으로 인해 import.sql insert가 안됨
+     * GeneratedValue 커스텀으로 인해 import.sql insert 안됨
      *
      */
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         orderService.initOrderData();
     }
 }
