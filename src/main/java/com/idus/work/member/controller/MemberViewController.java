@@ -17,7 +17,7 @@ public class MemberViewController {
 
     @RequestMapping(value="/list")
     public String list() {
-        return "/member/index";
+        return "/member/list";
     }
 
     @GetMapping(value="/detail/{id}")
