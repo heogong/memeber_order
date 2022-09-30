@@ -17,8 +17,10 @@ public class Order {
     @Id
     @GeneratedValue(generator = "orderNumber")
     @GenericGenerator(name = "orderNumber", strategy = "com.idus.work.order.entity.OrderNumberGenerator")
+    @Column(length = 12)
     private String orderNumber; // 중복불가 영문자 대문자
 
+    @Column(length = 100, nullable = false)
     private String productName;
 
     @Temporal(TemporalType.TIMESTAMP)

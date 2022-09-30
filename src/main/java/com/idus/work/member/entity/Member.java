@@ -28,17 +28,22 @@ public class Member implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 30)
+    @Column(length = 30, nullable = false)
     private String nickName;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String email;
 
+    @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
