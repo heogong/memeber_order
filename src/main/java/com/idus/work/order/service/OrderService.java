@@ -7,6 +7,7 @@ import com.idus.work.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class OrderService {
     /**
      * 구동 시 초기 주문 정보 세팅
      */
+    @Transactional
     public void initOrderData() {
         Member member1 = Member.createInitMember(memberService.getMember(1L));
         Member member2 = Member.createInitMember(memberService.getMember(2L));
