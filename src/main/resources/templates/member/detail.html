@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>멤버</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+        <body onload="initPage();">
+            <h1 class="text-center mg-tb-30">멤버 정보</h1>
+            <table class="table table-hover" style="table-layout: fixed;">
+                <tr>
+                    <th class="col-md-2">이름</th>
+                    <th class="col-md-3">이메일</th>
+                    <th class="col-md-2">별명</th>
+                    <th class="col-md-2">전화번호</th>
+                    <th class="col-md-1">성별</th>
+                </tr>
+                <tr>
+                    <td id="name"></td>
+                    <td id="email"></td>
+                    <td id="nickName"></td>
+                    <td id="phoneNumber"></td>
+                    <td id="gender"></td>
+                </tr>
+            </table>
+
+            <h1 class="text-center mg-tb-30">주문 정보</h1>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th>주문번호</th>
+                    <th>제품명</th>
+                    <th>주문날짜</th>
+                </tr>
+                <tbody id="tBody"></tbody>
+            </table>
+
+
+        <input type="hidden" th:value="${id}" name="memberId"/>
+
+        <script type="text/javascript">
+            function initPage() {
+                getMember();
+            }
+
+            function getMember() {
+                const id = $('[name="memberId"]').val();
+                $.ajax({
+                    url : "/api/v1/member/" + id,
+                    method : 'GET',
+                    contentType : 'application/json; charset=utf-8',
+                    dataType: "json",
+
+                    success : function(e) {
+                        console.log(e);
+
+                        $("#name").text(e.name);
+                        $("#email").text(e.email);
+                        $("#nickName").text(e.nickName);
+                        $("#phoneNumber").text(e.phoneNumber);
+                        $("#gender").text(e.gender);
+
+                        const tBody = $('#tBody');
+
+                        if(e.orderRespList.length > 0) {
+                            for (let i = 0; i < e.orderRespList.length; i++) {
+                                const order = e.orderRespList[i];
+                                const tr = $("<tr>").appendTo(tBody);
+
+                                $("<td>").addClass("align-middle").text(order.orderNumber).appendTo(tr);
+                                $("<td>").addClass("align-middle").text(order.productName).appendTo(tr);
+                                $("<td>").addClass("align-middle").text(order.createDate).appendTo(tr);
+                            }
+                        } else {
+                            const tr = $("<tr>").appendTo(tBody);
+                            $("<td>").addClass("textCenter").attr("colspan", "3").text("주문 정보가 없습니다.").appendTo(tr);
+                        }
+                    },
+                    error:function(request,status,error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

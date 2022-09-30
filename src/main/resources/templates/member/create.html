@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>멤버 등록</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">멤버 등록</h1>
+
+    <form name="memberForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">이름</label>
+        <input type="text" class="form-control" id="name" maxlength="20" title="이름" placeholder="한글, 영문 대소문자">
+        <div id="errorName" style="color: #b21f2d"></div>
+      </div>
+      <div class="mb-3">
+        <label for="nickName" class="form-label">별명</label>
+        <input type="text" class="form-control" id="nickName" maxlength="30" title="별명" placeholder="영문 소문자">
+        <div id="errorNickName" style="color: #b21f2d"></div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">비밀번호</label>
+        <input type="password" class="form-control" id="password" minlength="10" title="비밀번호"
+               placeholder="영문 대/소문자, 특수문자, 숫자 각 1개">
+        <div id="errorPassword" style="color: #b21f2d"></div>
+      </div>
+      <div class="mb-3">
+        <label for="rePassword" class="form-label">비밀번호 확인</label>
+        <input type="password" class="form-control" id="rePassword" minlength="10" title="비밀번호 확인">
+      </div>
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">전화번호</label>
+        <input type="tel" class="form-control" id="phoneNumber" maxlength="20" title="전화번호" placeholder="숫자만">
+        <div id="errorPhoneNumber" style="color: #b21f2d"></div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">이메일(로그인 아이디)</label>
+        <input type="email" class="form-control" id="email" maxlength="100" title="이메일" placeholder="member@work.com">
+        <div id="errorEmail" style="color: #b21f2d"></div>
+      </div>
+    </form>
+    <div class="mb-3">
+      <label> 성별
+        <select name="gender">
+          <option value="NONE" selected>== 선택 ==</option>
+          <option value="MALE">남성</option>
+          <option value="FEMALE">여성</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="text-right">
+      <button class="btn btn-success" type="button" onclick="createMember()">등록</button>
+<!--      <button class="btn btn-secondary" type="button" onclick="cancle()">취소</button>-->
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    function createMember() {
+      if(!emptyValueCheck()) return;
+
+      const name = $("#name").val();
+      const nickName = $("#nickName").val();
+      const password = $("#password").val();
+      const rePassword = $("#rePassword").val();
+      const phoneNumber = $("#phoneNumber").val();
+      const email = $("#email").val();
+      const gender = $("input[name='gender']:checked").val();
+
+      if(password !== rePassword) {
+        alert("입력한 비밀번호가 동일하지 않습니다.");
+        return false;
+      }
+
+      const params = {
+        name: name,
+        nickName: nickName,
+        password: password,
+        phoneNumber: phoneNumber,
+        email: email,
+        gender: gender
+      }
+
+      $.ajax({
+        url : "/api/v1/member",
+        method : 'POST',
+        contentType : 'application/json; charset=utf-8',
+        dataType: "json",
+        data: JSON.stringify(params),
+        success : function(e) {
+          console.log(e);
+          // $("#userId").val(e.userId);
+          alert("등록완료");
+        },
+        error:function(request, status, error) {
+          console.log(request," // " ,status, " // ",error)
+          alert(JSON.stringify(request.responseJSON));
+          emptyValidText();
+          validText(request.responseJSON);
+        }
+      });
+    }
+
+    function emptyValueCheck() {
+      const frm = document.memberForm;
+      for(let i = 0; i < frm.length; i++) {
+        if(frm[i].value.trim() === '') {
+          alert("[" + frm[i].title +"] 입력해주세요.");
+          frm[i].focus();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function emptyValidText() {
+      $("#errorName").empty();
+      $("#errorNickName").empty();
+      $("#errorPassword").empty();
+      $("#errorPhoneNumber").empty();
+      $("#errorEmail").empty();
+    }
+
+    function validText(errorJsonText) {
+      $("#errorName").text(errorJsonText.name);
+      $("#errorNickName").text(errorJsonText.nickName);
+      $("#errorPassword").text(errorJsonText.password);
+      $("#errorPhoneNumber").text(errorJsonText.phoneNumber);
+      $("#errorEmail").text(errorJsonText.email);
+    }
+  </script>
+
+
+</body>
+</html>
