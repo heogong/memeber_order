@@ -99,7 +99,7 @@
         },
         error:function(request, status, error) {
           console.log(request," // " ,status, " // ",error)
-          alert(JSON.stringify(request.responseJSON));
+          alert(request.responseJSON.message);
           emptyValidText();
           validText(request.responseJSON);
         }
