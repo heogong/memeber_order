@@ -10,6 +10,10 @@
 </head>
         <body onload="initPage();">
             <div class="container">
+                <div class="text-right">
+                   <button class="btn btn-primary mb-3" type="button" onclick="goList()">리스트</button>
+                </div>
+
                 <h1 class="text-center mg-tb-30">멤버 정보</h1>
                 <table class="table table-hover" style="table-layout: fixed;">
                     <tr>
@@ -84,6 +88,10 @@
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                     }
                 });
+            }
+
+            function goList() {
+                location.href = "/view/member/list";
             }
         </script>
     </body>

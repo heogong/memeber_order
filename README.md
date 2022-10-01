@@ -1,7 +1,7 @@
-# ㅇㅇㅇㅇㅇ
+# 백패커 JAVA
 
 ### java
-- jdk-11.0.12
+- jdk-11
 
 ### Spring boot
 - 2.7.4
@@ -17,6 +17,4 @@
 
 ### 접속
 - http://localhost:8080
-    - id : member@member.com
-    - pw : superAdmin1!
 - swagger : http://localhost:8080/swagger-ui.html

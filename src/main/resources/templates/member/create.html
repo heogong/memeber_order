@@ -56,7 +56,7 @@
 
     <div class="text-right">
       <button class="btn btn-success" type="button" onclick="createMember()">등록</button>
-<!--      <button class="btn btn-secondary" type="button" onclick="cancle()">취소</button>-->
+      <button class="btn btn-secondary" type="button" onclick="loginPage()">취소</button>
     </div>
   </div>
 
@@ -94,8 +94,10 @@
         data: JSON.stringify(params),
         success : function(e) {
           console.log(e);
-          // $("#userId").val(e.userId);
+
           alert("등록완료");
+          loginPage();
+
         },
         error:function(request, status, error) {
           console.log(request," // " ,status, " // ",error)
@@ -132,6 +134,10 @@
       $("#errorPassword").text(errorJsonText.password);
       $("#errorPhoneNumber").text(errorJsonText.phoneNumber);
       $("#errorEmail").text(errorJsonText.email);
+    }
+
+    function loginPage() {
+      location.href="/";
     }
   </script>
 

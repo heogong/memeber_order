@@ -11,7 +11,6 @@
 //
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/").setViewName("member/index");
-//        registry.addViewController("/member/detail/{id}").setViewName("member/detail/{id}");
+//        registry.addViewController("/login").setViewName("login");
 //    }
 //}

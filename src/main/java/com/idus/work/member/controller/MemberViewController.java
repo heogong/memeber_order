@@ -10,6 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/view/member")
 public class MemberViewController {
 
+    @RequestMapping(value="/login")
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping(value="/create")
     public String create() {
         return "/member/create";

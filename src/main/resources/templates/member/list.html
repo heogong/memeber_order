@@ -13,7 +13,9 @@
 
 <div class="container">
     <div class="text-right">
-        <button class="btn btn-dark" type="button" onclick="logout()">로그아웃</button>
+        <form method="POST" th:action="@{/logout}">
+            <input type="submit" class="btn btn-dark" value="로그아웃">
+        </form>
     </div>
     <h1 class="text-center">멤버 목록</h1>
 
