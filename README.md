@@ -10,11 +10,14 @@
 - ALTER DATABASE "데이터베이스명" CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 ### 데이터베이스 설정
-- application.yaml
+- application.yaml 설정
 
 ### 초기 DB Schema
 - 구동 시 자동생성
 
+### 초기 DATA
+- 구동 시 자동생성
+
 ### 접속
-- http://localhost:8080
+- 서비스 : http://localhost:8080
 - swagger : http://localhost:8080/swagger-ui.html
