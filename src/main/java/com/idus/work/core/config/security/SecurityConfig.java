@@ -13,20 +13,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
-//@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
     private final CustomUserDetailService customUserDetailService;
-
-    // TODO 참고 : https://velog.io/@csh0034/Spring-Security-Config-Refactoring
     @Bean
     @Order(0)
     public SecurityFilterChain resources(HttpSecurity http) throws Exception {
         return http.requestMatchers(matchers -> matchers
                 .antMatchers("/images/**", "/js/**", "/css/**", "/swagger-ui/**")).build();
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -58,7 +53,6 @@ public class SecurityConfig {
         ;
         return http.build();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
