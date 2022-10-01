@@ -7,14 +7,14 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-#        format_sql: true
-#        show_sql: true
+        format_sql: true
+        show_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
   datasource:
-    url: jdbc:mysql://localhost:3306/study_db?serverTimezone=UTC&rewriteBatchedStatements=true&useUnicode=true
-    username: root
-    password: 1234
+    url: jdbc:mysql://localhost:3306/___데이터베이스명___?serverTimezone=UTC&rewriteBatchedStatements=true&useUnicode=true
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
   mvc:
     pathmatch:
