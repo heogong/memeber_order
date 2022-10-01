@@ -75,9 +75,19 @@
                                 const order = e.orderRespList[i];
                                 const tr = $("<tr>").appendTo(tBody);
 
+                                const createDate = new Date(order.createDate);
+                                const year = createDate.getFullYear();
+                                const month =  ('0' + (createDate.getMonth() + 1)).slice(-2);
+                                const day = ('0' + createDate.getDate()).slice(-2);
+                                const hours = ('0' + createDate.getHours()).slice(-2);
+                                const minutes = ('0' + createDate.getMinutes()).slice(-2);
+                                const seconds = ('0' + createDate.getSeconds()).slice(-2);
+
+                                const orderDate =  year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+
                                 $("<td>").addClass("align-middle").text(order.orderNumber).appendTo(tr);
                                 $("<td>").addClass("align-middle").text(order.productName).appendTo(tr);
-                                $("<td>").addClass("align-middle").text(order.createDate).appendTo(tr);
+                                $("<td>").addClass("align-middle").text(orderDate).appendTo(tr);
                             }
                         } else {
                             const tr = $("<tr>").appendTo(tBody);
